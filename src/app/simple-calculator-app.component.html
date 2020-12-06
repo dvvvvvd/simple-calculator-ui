@@ -1,15 +1,15 @@
 <div id="simple-calculation-page">
-  <div id="input">
-    <input type="text" id="left-hand-input">
-    <input type="text" id="right-hand-input">
+  <form [formGroup]="calculationInputForm">
+  <div id="equation">
+    <input id="left-hand-input" type="text" formControlName="leftHandInput">
+    <input id="right-hand-input" type="text" formControlName="rightHandInput">
+    <span> = {{result}}</span>
   </div>
+  </form>
   <div id="operands">
-    <button type="button">+</button>
-    <button type="button">-</button>
-    <button type="button">/</button>
-    <button type="button">*</button>
-  </div>
-  <div id="result">
-    <div>{{result}}</div>
+    <button id="add-button" type="button" [disabled]="!calculationInputForm.valid" (click)="retrieveCalculationResult('add')">+</button>
+    <button id="subtract-button" type="button" [disabled]="!calculationInputForm.valid" (click)="retrieveCalculationResult('subtract')">-</button>
+    <button id="divide-button" type="button" [disabled]="!calculationInputForm.valid" (click)="retrieveCalculationResult('divide')">/</button>
+    <button id="multiply-button" type="button" [disabled]="!calculationInputForm.valid" (click)="retrieveCalculationResult('multiply')">*</button>
   </div>
 </div>

@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-
+import { ApiDataService } from "./api/api.data.service"
+import { SimpleCalculationDto } from './api/simple.calculation.dto';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SimpleCalculationDtoFactory } from './api/simple.calculation.dto.factory'
+import { ValidatorRegex} from "./properties/validator-enum"
 
 @Component({
   selector: 'app-root',
@@ -7,11 +11,30 @@ import { Component } from '@angular/core';
   styleUrls: ['./simple-calculator-app.component.scss']
 })
 export class SimpleCalculatorAppComponent {
-  public result: Number;
+
+  public calculationInputForm: FormGroup
+  public result?: Number;
 
   title = 'simple-calculator-ui';
 
-  constructor() {
-    this.result = 0;
+  constructor(
+    private apiDataService: ApiDataService,
+    private simpleCalculationDtoFactory: SimpleCalculationDtoFactory) {
+    this.result = undefined;
+    this.calculationInputForm = new FormGroup({
+      leftHandInput: new FormControl('', [ Validators.required, Validators.pattern(ValidatorRegex.Integer)]),
+      rightHandInput: new FormControl('', [ Validators.required, Validators.pattern(ValidatorRegex.Integer)]),
+    });
   }
+
+  public retrieveCalculationResult(operation: string) {
+    const dto: SimpleCalculationDto = this.simpleCalculationDtoFactory.create(this.calculationInputForm.value);
+    this.apiDataService.postSimpleCalculationDto("/" + operation, dto).subscribe(
+      res => {
+         this.result = res.result;
+      },
+      err => {
+         console.log('Error occured');
+      });
+  } 
 }
