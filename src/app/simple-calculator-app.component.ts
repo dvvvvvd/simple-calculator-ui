@@ -14,6 +14,7 @@ export class SimpleCalculatorAppComponent {
 
   public calculationInputForm: FormGroup
   public result?: Number;
+  public errorMessage: string;
 
   title = 'simple-calculator-ui';
 
@@ -21,6 +22,7 @@ export class SimpleCalculatorAppComponent {
     private apiDataService: ApiDataService,
     private simpleCalculationDtoFactory: SimpleCalculationDtoFactory) {
     this.result = undefined;
+    this.errorMessage = '';
     this.calculationInputForm = new FormGroup({
       leftHandInput: new FormControl('', [ Validators.required, Validators.pattern(ValidatorRegex.Integer)]),
       rightHandInput: new FormControl('', [ Validators.required, Validators.pattern(ValidatorRegex.Integer)]),
@@ -32,9 +34,10 @@ export class SimpleCalculatorAppComponent {
     this.apiDataService.postSimpleCalculationDto("/" + operation, dto).subscribe(
       res => {
          this.result = res.result;
+         this.errorMessage = '';
       },
       err => {
-         console.log('Error occured');
+         this.errorMessage = err.error;
       });
   } 
 }
