@@ -8,12 +8,12 @@ import { SimpleCalculationDtoFactory } from './api/simple.calculation.dto.factor
 import { SimpleCalculationResult } from './model/simple.calculation.result';
 import { SimpleCalculatorAppComponent } from './simple-calculator-app.component';
 
+
 describe('SimpleCalculatorAppComponent', () => {
 
   const SIMPLE_CALCULATION_RESULT: SimpleCalculationResult = new SimpleCalculationResult(3);
-  const OPERATION: string = 'add';
-  const PATH: string = '/add';
-  const SIMPLE_CALCULATION_DTO: SimpleCalculationDto = new SimpleCalculationDto(1, 2);
+  const OPERATION: string = 'ADD';
+  const SIMPLE_CALCULATION_DTO: SimpleCalculationDto = new SimpleCalculationDto(1, 2, OPERATION);
 
   let mockApiDataService: ApiDataService;
 
@@ -46,38 +46,36 @@ describe('SimpleCalculatorAppComponent', () => {
       const fixture = TestBed.createComponent(SimpleCalculatorAppComponent);
       const app = fixture.componentInstance;
       
-      spyOn(mockApiDataService, 'postSimpleCalculationDto').and.returnValue(
-        of(SIMPLE_CALCULATION_RESULT)
+      spyOn(mockApiDataService, 'postSimpleCalculationDtos').and.returnValue(
+        of([SIMPLE_CALCULATION_RESULT])
       );
 
-      app.calculationInputForm.patchValue({
-        leftHandInput: '1',
-        rightHandInput: '2'
-      });
+      let calculationList: SimpleCalculationDto[] = [SIMPLE_CALCULATION_DTO];
+      app.calculationDtoList = [SIMPLE_CALCULATION_DTO];
 
-      app.retrieveCalculationResult(OPERATION);
+      app.retrieveCalculationResults();
 
-      expect(mockApiDataService.postSimpleCalculationDto)
-      .toHaveBeenCalledWith(PATH, SIMPLE_CALCULATION_DTO);
+      expect(mockApiDataService.postSimpleCalculationDtos)
+      .toHaveBeenCalledWith(calculationList);
     });
 
 
-    it('should set the result', () => {
+    it('should set the results', () => {
       const fixture = TestBed.createComponent(SimpleCalculatorAppComponent);
       const app = fixture.componentInstance;
       
-      spyOn(mockApiDataService, 'postSimpleCalculationDto').and.returnValue(
-        of(SIMPLE_CALCULATION_RESULT)
+      let resultList: SimpleCalculationResult[] = [SIMPLE_CALCULATION_RESULT];
+
+      spyOn(mockApiDataService, 'postSimpleCalculationDtos').and.returnValue(
+        of(resultList)
       );
 
-      app.calculationInputForm.patchValue({
-        leftHandInput: '1',
-        rightHandInput: '2'
-      });
+      let calculationList: SimpleCalculationDto[] = [SIMPLE_CALCULATION_DTO];
+      app.calculationDtoList = [SIMPLE_CALCULATION_DTO];
 
-      app.retrieveCalculationResult(OPERATION);
+      app.retrieveCalculationResults();
 
-      expect(app.result).toBe(3);
+      expect(app.results).toEqual(resultList);
     });
   });
 });

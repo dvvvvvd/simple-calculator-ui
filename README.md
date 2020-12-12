@@ -5,10 +5,13 @@ for the backend implementation: https://github.com/dvvvvvd/simple-calculator
 
 # Prerequisites:
 
-Chromedriver v87 </br>
-Node v15.3 </br>
-NPM v7 </br>
-Angular CLI v11 </br>
+Chromedriver v87
+
+Node v15.3
+
+NPM v7
+
+Angular CLI v11
 
 ## Development server
 

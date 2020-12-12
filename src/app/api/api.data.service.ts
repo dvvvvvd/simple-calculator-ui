@@ -15,9 +15,8 @@ export class ApiDataService {
 
     }
 
-    public postSimpleCalculationDto(path: string, simpleCalculationDto: SimpleCalculationDto): Observable<SimpleCalculationResult> {
-        let url = this.serverUrl + this.calculationContextPath + path;
-        console.log(url);
-        return this.httpClient.post<SimpleCalculationResult>(url, simpleCalculationDto, {})
+    public postSimpleCalculationDtos(dtos: SimpleCalculationDto[]): Observable<SimpleCalculationResult[]> {
+        let url = this.serverUrl + this.calculationContextPath;
+        return this.httpClient.post<SimpleCalculationResult[]>(url, dtos, {})
     }
 }

@@ -3,14 +3,33 @@
   <div id="equation">
     <input id="left-hand-input" type="text" formControlName="leftHandInput">
     <input id="right-hand-input" type="text" formControlName="rightHandInput">
-    <span> = {{result}}</span>
+  </div>
+  <div class="result-calculations-view">
+    <div id="calculations">
+      <ul>
+        calculations:
+        <li *ngFor="let calculation of calculationDtoList">({{calculation.leftHand}}, {{calculation.rightHand}}, {{calculation.operator}})</li>
+      </ul>
+    </div>
+    <div id="results">
+      <ul>
+        results:
+        <li *ngFor="let result of results">{{result.result}}</li>
+      </ul>
+    </div>
   </div>
   </form>
   <div id="operands">
-    <button id="add-button" type="button" [disabled]="!calculationInputForm.valid" (click)="retrieveCalculationResult('add')">+</button>
-    <button id="subtract-button" type="button" [disabled]="!calculationInputForm.valid" (click)="retrieveCalculationResult('subtract')">-</button>
-    <button id="divide-button" type="button" [disabled]="!calculationInputForm.valid" (click)="retrieveCalculationResult('divide')">/</button>
-    <button id="multiply-button" type="button" [disabled]="!calculationInputForm.valid" (click)="retrieveCalculationResult('multiply')">*</button>
+    <button id="add-button" type="button" [disabled]="!calculationInputForm.valid" (click)="addCalculation('ADD')">+</button>
+    <button id="subtract-button" type="button" [disabled]="!calculationInputForm.valid" (click)="addCalculation('SUBTRACT')">-</button>
+    <button id="divide-button" type="button" [disabled]="!calculationInputForm.valid" (click)="addCalculation('DIVIDE')">/</button>
+    <button id="multiply-button" type="button" [disabled]="!calculationInputForm.valid" (click)="addCalculation('MULTIPLY')">*</button>
+  </div>
+  <div id="calculation-button-div">
+    <button id="calculation-button" type="button" [disabled]="calculationDtoList.length === 0" (click)="retrieveCalculationResults()">calculate</button>
+  </div>
+  <div id="reset-button-div">
+    <button id="reset-button" type="button" (click)="reset()">reset</button>
   </div>
   <div id="error-message">
     {{errorMessage}}
