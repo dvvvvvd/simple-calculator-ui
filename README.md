@@ -1,7 +1,8 @@
 # SimpleCalculatorUi
 
-UI for implementing a Simple Calculator. Requires the following Git project
-for the backend implementation: https://github.com/dvvvvvd/simple-calculator
+UI for implementing a Simple Calculator. Supports addition, subtraction, division and multiplication. You can add multiple (a list of) calculations from the UI at once and send them to the backend for processing. All items in the list will be processed together. If there is a faulty item in the list the entire list is rejected. Only integer input is allowed.
+
+Requires the following Git project for the backend implementation: https://github.com/dvvvvvd/simple-calculator
 
 # Prerequisites:
 
